@@ -1,0 +1,8 @@
+pom.xml
+*.iml
+target/
+build/
+.idea/
+.gradle/
+out/
+.DS_Store
