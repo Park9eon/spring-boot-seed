@@ -1,14 +1,15 @@
 import com.google.cloud.tools.gradle.appengine.standard.DevAppServerRunTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
-        maven {
-            url = uri("https://maven-central.storage.googleapis.com")
-        }
         mavenCentral()
+        maven { setUrl("https://repo.spring.io/milestone") }
+        maven { setUrl("https://repo.spring.io/snapshot") }
+        maven { setUrl("https://maven-central.storage.googleapis.com") }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.4.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.BUILD-SNAPSHOT")
         classpath(kotlin("gradle-plugin"))
         classpath(kotlin("allopen"))
         classpath(kotlin("noarg"))
@@ -23,6 +24,7 @@ apply {
     plugin("kotlin-jpa")
     plugin("org.springframework.boot")
     plugin("com.google.cloud.tools.appengine")
+    plugin("io.spring.dependency-management")
 }
 
 plugins {
@@ -33,6 +35,8 @@ version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven { setUrl("https://repo.spring.io/milestone") }
+    maven { setUrl("https://repo.spring.io/snapshot") }
 }
 
 java {
@@ -40,34 +44,28 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-tasks {
-    "appengineRun"(DevAppServerRunTask::class) {
-        // systemProperties(System.getProperties() as MutableMap<String, *>)
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web") {
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    compile("org.springframework.boot:spring-boot-starter-webflux") {
         exclude("org.slf4j", "jul-to-slf4j")
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("javax.servlet:javax.servlet-api:3.1.0")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-
     compile(kotlin("stdlib-jre8"))
     compile(kotlin("reflect"))
     compile("jstl:jstl:1.2")
-    "providedCompile"("com.google.appengine:appengine-api-1.0-sdk:1.9.54")
-
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.google.appengine:appengine-api-1.0-sdk:1.9.54")
     compile("mysql:mysql-connector-java")
-
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile("org.springframework.boot:spring-boot-starter-security")
-
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }

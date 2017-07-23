@@ -1,14 +1,14 @@
 package com.park9eon.boot
 
 import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.web.support.SpringBootServletInitializer
-import org.springframework.web.servlet.config.annotation.EnableWebMvc
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 /**
  * Created by park9eon on 19/07/2017.
  */
-@EnableWebMvc
+@EnableAutoConfiguration
 @SpringBootApplication
 class Application: SpringBootServletInitializer()
 
