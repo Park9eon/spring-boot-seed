@@ -14,11 +14,7 @@ class PostController {
     @Autowired
     lateinit var postRepository: PostRepository
     @PostMapping
-    fun save(@RequestBody post: Post): Post? {
-        return postRepository.save(post)
-    }
+    fun save(@RequestBody post: Post) = postRepository.save(post)
     @GetMapping
-    fun index(): Iterable<Post>? {
-        return postRepository.findAll()
-    }
+    fun index() = postRepository.findAll()
 }

@@ -1,3 +1,5 @@
+import com.google.cloud.tools.gradle.appengine.standard.DevAppServerRunTask
+
 buildscript {
     repositories {
         maven {
@@ -43,6 +45,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+tasks {
+    "appengineRun"(DevAppServerRunTask::class) {
+        // systemProperties(System.getProperties() as MutableMap<String, *>)
+    }
+}
+
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude("org.slf4j", "jul-to-slf4j")
@@ -54,8 +62,12 @@ dependencies {
     compile(kotlin("stdlib-jre8"))
     compile(kotlin("reflect"))
     compile("jstl:jstl:1.2")
-    compile("com.google.appengine:appengine-api-1.0-sdk:1.9.54")
+    "providedCompile"("com.google.appengine:appengine-api-1.0-sdk:1.9.54")
 
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("mysql:mysql-connector-java")
+
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-security")
+
 }
