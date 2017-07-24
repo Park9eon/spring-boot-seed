@@ -8,7 +8,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * Created by park9eon on 19/07/2017.
  */
-@EnableAutoConfiguration
 @SpringBootApplication
 class Application: SpringBootServletInitializer()
 

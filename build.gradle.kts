@@ -1,4 +1,3 @@
-import com.google.cloud.tools.gradle.appengine.standard.DevAppServerRunTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -31,6 +30,7 @@ plugins {
     kotlin("jvm")
 }
 
+group = "com.park9eon.boot"
 version = "0.0.1-SNAPSHOT"
 
 repositories {
@@ -53,10 +53,11 @@ tasks.withType<KotlinCompile> {
 dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
-    compile("org.springframework.boot:spring-boot-starter-webflux") {
+    compile("org.springframework.boot:spring-boot-starter-web") {
         exclude("org.slf4j", "jul-to-slf4j")
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
+    compile("org.springframework.boot:spring-boot-starter-webflux")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")

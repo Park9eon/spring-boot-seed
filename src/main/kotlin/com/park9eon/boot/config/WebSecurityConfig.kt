@@ -1,15 +1,15 @@
 package com.park9eon.boot.config
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.ObjectPostProcessor
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 
+
 @Configuration
+@EnableWebSecurity
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override
     fun configure(http: HttpSecurity) {
@@ -24,6 +24,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
             .logout()
             .permitAll()
     }
+
     @Autowired
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
         auth
@@ -33,13 +34,4 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .roles("USER")
     }
 
-    @Bean
-    fun objectPostProcessor(
-            beanFactory: AutowireCapableBeanFactory): ObjectPostProcessor<Any> {
-        return object: ObjectPostProcessor<Any> {
-            override fun <O : Any?> postProcess(`object`: O): O {
-                return `object`
-            }
-        }
-    }
 }
