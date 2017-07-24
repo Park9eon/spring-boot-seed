@@ -1,9 +1,8 @@
 package com.park9eon.boot.domain
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import org.hibernate.validator.constraints.Length
+import org.hibernate.validator.constraints.NotEmpty
+import javax.persistence.*
 import javax.validation.constraints.NotNull
 
 /**
@@ -11,9 +10,19 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 class Post(
-        @Id
+       @Id
        @GeneratedValue(strategy = GenerationType.AUTO)
        var id: Long? = null,
+
+       @Length(max = 250)
+       @NotEmpty()
+       var content: String? = null,
+
        @NotNull
-       var content: String? = null
+       @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+       @JoinColumn(name = "user_id", referencedColumnName = "id")
+       var user: User? = null
 )
+
+@OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER, orphanRemoval = true)
+private fun User.getPosts(): Iterable<Post>? = null
