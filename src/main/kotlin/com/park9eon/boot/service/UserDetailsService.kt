@@ -10,7 +10,8 @@ class UserDetailsService(
         val userRepository: UserRepository
 ): UserDetailsService {
 
-    override fun loadUserByUsername(username: String?): UserDetails {
+    override
+    fun loadUserByUsername(username: String?): UserDetails {
         return UserDetails(userRepository.findById(username).get())
     }
 

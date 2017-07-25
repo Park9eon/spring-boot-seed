@@ -15,9 +15,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 class WebSecurityConfig: WebSecurityConfigurerAdapter() {
 
     @Autowired
-    lateinit var bCryptPasswordEncoder: BCryptPasswordEncoder
+    lateinit
+    var bCryptPasswordEncoder: BCryptPasswordEncoder
+
     @Autowired
-    lateinit var userDetailsService: UserDetailsService
+    lateinit
+    var userDetailsService: UserDetailsService
 
     override
     fun configure(http: HttpSecurity) {

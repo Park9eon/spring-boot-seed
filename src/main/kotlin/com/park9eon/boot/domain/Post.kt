@@ -1,7 +1,7 @@
 package com.park9eon.boot.domain
 
-import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.NotEmpty
+import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotNull
 
@@ -10,19 +10,22 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 class Post(
+
        @Id
        @GeneratedValue(strategy = GenerationType.AUTO)
        var id: Long? = null,
 
-       @Length(max = 250)
-       @NotEmpty()
+       @NotEmpty
+       @Column(columnDefinition = "TEXT")
        var content: String? = null,
 
        @NotNull
-       @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+       @ManyToOne(fetch = FetchType.LAZY)
        @JoinColumn(name = "user_id", referencedColumnName = "id")
-       var user: User? = null
-)
+       var user: User? = null,
 
-@OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER, orphanRemoval = true)
-private fun User.getPosts(): Iterable<Post>? = null
+       @Temporal(TemporalType.TIMESTAMP)
+       var updateDate: Date? = null,
+       @Temporal(TemporalType.TIMESTAMP)
+       var createDate: Date? = null
+)

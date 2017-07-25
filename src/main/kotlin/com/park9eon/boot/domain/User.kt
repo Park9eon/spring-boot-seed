@@ -19,17 +19,17 @@ class User(
         @GenericGenerator(name="system-uuid", strategy = "uuid")
         var id: String? = null,
 
-        @Email
-        @Length(max = 50)
+        @get:Email
+        @get:Length(max = 50)
         @Column(unique = true)
         var username: String? = null,
 
-        @get:JsonIgnore
+        @JsonIgnore
         var password: String? = null,
 
         @get:JsonIgnore
         @set:JsonIgnore
-        var authorities: UserRole? = null,
+        var authorities: UserRole = UserRole.READER,
 
         @get:JsonIgnore
         @set:JsonIgnore
@@ -54,18 +54,25 @@ enum class UserRole {
 
 class UserDetails(private val user: User): UserDetails {
 
-    override fun getUsername() = user.id
+    override
+    fun getUsername() = user.id
 
-    override fun getPassword() = user.password
+    override
+    fun getPassword() = user.password
 
-    override fun getAuthorities() = listOf(GrantedAuthority { user.authorities?.name })
+    override
+    fun getAuthorities() = listOf(GrantedAuthority { user.authorities.name })
 
-    override fun isEnabled() = user.isEnabled
+    override
+    fun isEnabled() = user.isEnabled
 
-    override fun isCredentialsNonExpired() = !user.isCredentialsExpired
+    override
+    fun isCredentialsNonExpired() = !user.isCredentialsExpired
 
-    override fun isAccountNonExpired() = !user.isAccountExpired
+    override
+    fun isAccountNonExpired() = !user.isAccountExpired
 
-    override fun isAccountNonLocked() = !user.isAccountLocked
+    override
+    fun isAccountNonLocked() = !user.isAccountLocked
 
 }

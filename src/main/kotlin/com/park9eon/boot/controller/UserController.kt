@@ -11,6 +11,7 @@ class UserController(
 ) {
     @PostMapping
     fun save(@RequestBody user: User) = userService.save(user)
+
     @DeleteMapping("/{username}")
     fun delete(@PathVariable username: String) = userService.delete(username)
 }

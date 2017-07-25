@@ -10,7 +10,7 @@ class PostController(
         val postRepository: PostRepository
 ) {
     @GetMapping
-    fun index() = postRepository.findAll()
+    fun findAll() = postRepository.findAll()
 
     @PostMapping
     fun save(@RequestBody post: Post) = postRepository.save(post)
