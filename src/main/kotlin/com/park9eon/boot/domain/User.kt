@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.Length
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -13,7 +14,6 @@ import javax.persistence.Id
 
 @Entity
 class User(
-
         @Id
         @GeneratedValue(generator = "system-uuid")
         @GenericGenerator(name="system-uuid", strategy = "uuid")
@@ -46,7 +46,34 @@ class User(
         @get:JsonIgnore
         @set:JsonIgnore
         var isAccountLocked: Boolean = false
-)
+
+): TimestampEntity {
+
+    override
+    var updateDate: Date? = null
+
+    override
+    var createDate: Date? = null
+
+    override fun toString(): String {
+        return "User(id=$id, username=$username, password=$password, authorities=$authorities, isEnabled=$isEnabled, isCredentialsExpired=$isCredentialsExpired, isAccountExpired=$isAccountExpired, isAccountLocked=$isAccountLocked, updateDate=$updateDate, createDate=$createDate)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other?.javaClass != javaClass) return false
+
+        other as User
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
+    }
+}
 
 enum class UserRole {
     ADMIN, USER, READER

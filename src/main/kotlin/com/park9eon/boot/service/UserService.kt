@@ -43,11 +43,6 @@ class UserService(
     fun save(user: User): User {
         user.password = user.password?.let { bCryptPasswordEncoder.encode(it) }
        userRepository.save(user)
-
-       postRepository.save(
-               Post(content = "Hello, World!",
-                       user = user))
-
        return user
     }
 
